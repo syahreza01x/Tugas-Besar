@@ -1,0 +1,51 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Composer (if used later)
+/vendor/
+composer.lock
+
+# Node modules (if used later)
+/node_modules/
+package-lock.json
+
+# Cache and temp files
+*.cache
+*.tmp
+/cache/
+/tmp/
+
+# Uploaded files (optional - uncomment if needed)
+# /uploads/
+# /assets/uploads/
+
+# Database dumps
+*.sql.gz
+*.sql.bak
+
+# Sensitive config files (uncomment if you have separate local config)
+# config/database.local.php
