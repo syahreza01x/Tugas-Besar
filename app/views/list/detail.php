@@ -34,6 +34,20 @@ require_once __DIR__ . '/../layouts/header.php';
                             <i class="fas fa-star me-2"></i>Your Score: <?= $anime->score ?>/10
                         </p>
                     <?php endif; ?>
+                    
+                    <!-- Toggle Favorite Button -->
+                    <form action="<?= baseUrl('list/toggle-favorite/' . $anime->id) ?>" method="POST" class="mt-3">
+                        <?= csrfField() ?>
+                        <?php if ($isFavorite): ?>
+                            <button type="submit" class="btn btn-danger w-100">
+                                <i class="fas fa-heart me-2"></i>Remove from Favorites
+                            </button>
+                        <?php else: ?>
+                            <button type="submit" class="btn btn-outline-danger w-100">
+                                <i class="far fa-heart me-2"></i>Add to Favorites
+                            </button>
+                        <?php endif; ?>
+                    </form>
                 </div>
             </div>
         </div>
@@ -117,12 +131,63 @@ require_once __DIR__ . '/../layouts/header.php';
             </div>
 
             <!-- Synopsis -->
-            <div class="card border-0 shadow-sm">
+            <div class="card border-0 shadow-sm mb-4">
                 <div class="card-header bg-white">
                     <h5 class="mb-0"><i class="fas fa-book me-2"></i>Synopsis</h5>
                 </div>
                 <div class="card-body">
                     <p class="mb-0"><?= nl2br(e($anime->sinopsis)) ?></p>
+                </div>
+            </div>
+
+            <!-- Review Section -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-pen me-2"></i>Write a Review</h5>
+                </div>
+                <div class="card-body">
+                    <?php if ($existingReview): ?>
+                        <div class="alert alert-info mb-0">
+                            <i class="fas fa-check-circle me-2"></i>
+                            You have already reviewed this anime. 
+                            <a href="<?= baseUrl('reviews') ?>" class="alert-link">View your reviews</a>
+                        </div>
+                    <?php else: ?>
+                        <form action="<?= baseUrl('list/review/' . $anime->id) ?>" method="POST">
+                            <?= csrfField() ?>
+                            
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating (1-10)</label>
+                                <select name="rating" id="rating" class="form-select" required>
+                                    <option value="">Select rating...</option>
+                                    <?php for ($i = 10; $i >= 1; $i--): ?>
+                                        <option value="<?= $i ?>"><?= $i ?> - <?= 
+                                            $i >= 9 ? 'Masterpiece' : 
+                                            ($i >= 7 ? 'Great' : 
+                                            ($i >= 5 ? 'Average' : 
+                                            ($i >= 3 ? 'Bad' : 'Terrible'))) 
+                                        ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="review_text" class="form-label">Your Review</label>
+                                <textarea name="review_text" id="review_text" class="form-control" rows="5" 
+                                          placeholder="Share your thoughts about this anime... (minimum 10 characters)" 
+                                          required minlength="10"></textarea>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" name="is_spoiler" id="is_spoiler" class="form-check-input" value="1">
+                                <label for="is_spoiler" class="form-check-label">This review contains spoilers</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Review
+                            </button>
+                        </form>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

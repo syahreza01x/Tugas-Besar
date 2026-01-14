@@ -32,6 +32,8 @@ $router->get('list/{id}', 'ListController', 'show');
 $router->post('list/update-status', 'ListController', 'updateStatus');
 $router->post('list/update/{id}', 'ListController', 'update');
 $router->post('list/delete/{id}', 'ListController', 'delete');
+$router->post('list/toggle-favorite/{id}', 'ListController', 'toggleFavorite');
+$router->post('list/review/{id}', 'ListController', 'storeReview');
 
 // Favorites
 $router->get('favorites', 'FavoriteController', 'index');
