@@ -83,14 +83,14 @@ require_once __DIR__ . '/../layouts/header.php';
                 <div class="card-body">
                     <?php if (!empty($statusCounts)): ?>
                         <?php foreach ($statusCounts as $status): ?>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>
-                                    <span class="badge me-2" style="background-color: <?= $status->color ?>">
+                            <div class="d-flex align-items-center mb-2">
+                                <div style="min-width: 160px;">
+                                    <span class="badge me-2" style="background-color: <?= $status->color ?>; min-width: 28px;">
                                         <?= $status->count ?>
                                     </span>
                                     <?= e($status->name) ?>
-                                </span>
-                                <div class="progress flex-grow-1 mx-3" style="height: 8px;">
+                                </div>
+                                <div class="progress flex-grow-1" style="height: 8px;">
                                     <?php 
                                     $total = array_sum(array_column($statusCounts, 'count'));
                                     $percentage = $total > 0 ? ($status->count / $total) * 100 : 0;
