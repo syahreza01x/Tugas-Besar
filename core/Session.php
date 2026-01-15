@@ -33,8 +33,38 @@ class Session
 
     public static function destroy()
     {
-        session_destroy();
+        // Unset all session variables
         $_SESSION = [];
+        
+        // Delete the session cookie
+        if (ini_get('session.use_cookies')) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
+            );
+        }
+        
+        // Destroy the session
+        session_destroy();
+    }
+
+    /**
+     * Regenerate session ID to prevent session fixation attacks
+     * Call this after successful login
+     */
+    public static function regenerate()
+    {
+        // Regenerate session ID and delete old session
+        session_regenerate_id(true);
+        
+        // Also regenerate CSRF token
+        self::remove('csrf_token');
     }
 
     public static function flash($key, $value = null)
@@ -55,7 +85,22 @@ class Session
 
     public static function isLoggedIn()
     {
-        return isset($_SESSION['user_id']);
+        if (!isset($_SESSION['user_id'])) {
+            return false;
+        }
+        
+        // Validate session fingerprint to prevent session hijacking
+        $currentUserAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+        $storedUserAgent = $_SESSION['user_agent'] ?? '';
+        
+        // If user agent doesn't match, invalidate session
+        if ($storedUserAgent && $currentUserAgent !== $storedUserAgent) {
+            self::destroy();
+            self::start();
+            return false;
+        }
+        
+        return true;
     }
 
     public static function user()

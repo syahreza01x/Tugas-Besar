@@ -95,4 +95,24 @@ function truncateText(text, maxLength) {
     return text;
 }
 
+// Gender selection for profile
+function selectGender(radioId) {
+    // Reset all gender cards style
+    document.querySelectorAll('.gender-card').forEach(card => {
+        card.style.border = '2px solid #dee2e6';
+        card.style.backgroundColor = '';
+        card.style.boxShadow = '';
+    });
+    
+    // Check the radio button and style the selected card
+    const radio = document.getElementById(radioId);
+    if (radio) {
+        radio.checked = true;
+        const card = radio.closest('.gender-card');
+        card.style.border = '2px solid #0d6efd';
+        card.style.backgroundColor = 'rgba(13, 110, 253, 0.05)';
+        card.style.boxShadow = '0 0 0 3px rgba(13, 110, 253, 0.15)';
+    }
+}
+
 console.log('AnimeList App Loaded');

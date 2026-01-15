@@ -82,22 +82,26 @@ require_once __DIR__ . '/../layouts/header.php';
                             <label class="form-label">Gender</label>
                             <div class="row g-3">
                                 <div class="col-6">
-                                    <div class="form-check card p-3">
-                                        <input class="form-check-input" type="radio" name="gender" 
+                                    <div class="gender-card card p-3 text-center" 
+                                         style="cursor: pointer; border: 2px solid <?= $user->gender == 'Pria' ? '#0d6efd' : '#dee2e6' ?> !important; <?= $user->gender == 'Pria' ? 'background-color: rgba(13, 110, 253, 0.05); box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);' : '' ?>"
+                                         onclick="selectGender('gender-pria')">
+                                        <input class="form-check-input d-none" type="radio" name="gender" 
                                                id="gender-pria" value="Pria" 
                                                <?= $user->gender == 'Pria' ? 'checked' : '' ?>>
-                                        <label class="form-check-label d-block text-center" for="gender-pria">
+                                        <label class="d-block" style="cursor: pointer; margin: 0;" for="gender-pria">
                                             <i class="fas fa-mars fa-2x text-primary mb-2"></i>
                                             <div>Pria</div>
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="form-check card p-3">
-                                        <input class="form-check-input" type="radio" name="gender" 
+                                    <div class="gender-card card p-3 text-center" 
+                                         style="cursor: pointer; border: 2px solid <?= $user->gender == 'Wanita' ? '#0d6efd' : '#dee2e6' ?> !important; <?= $user->gender == 'Wanita' ? 'background-color: rgba(13, 110, 253, 0.05); box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);' : '' ?>"
+                                         onclick="selectGender('gender-wanita')">
+                                        <input class="form-check-input d-none" type="radio" name="gender" 
                                                id="gender-wanita" value="Wanita" 
                                                <?= $user->gender == 'Wanita' ? 'checked' : '' ?>>
-                                        <label class="form-check-label d-block text-center" for="gender-wanita">
+                                        <label class="d-block" style="cursor: pointer; margin: 0;" for="gender-wanita">
                                             <i class="fas fa-venus fa-2x text-danger mb-2"></i>
                                             <div>Wanita</div>
                                         </label>

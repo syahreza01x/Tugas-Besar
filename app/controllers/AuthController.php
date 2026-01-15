@@ -39,10 +39,17 @@ class AuthController extends Controller
         $user = $this->userModel->attempt($email, $password);
 
         if ($user) {
+            // IMPORTANT: Regenerate session ID to prevent session fixation attacks
+            Session::regenerate();
+            
             Session::set('user_id', $user->id);
             Session::set('user_name', $user->name);
             Session::set('user_email', $user->email);
             Session::set('user_image', $user->image);
+            
+            // Set session fingerprint for additional security
+            Session::set('user_agent', $_SERVER['HTTP_USER_AGENT'] ?? '');
+            Session::set('ip_address', $_SERVER['REMOTE_ADDR'] ?? '');
 
             Session::flash('success', 'Welcome back, ' . $user->name . '!');
             $this->redirect('dashboard');
@@ -104,8 +111,12 @@ class AuthController extends Controller
 
     public function logout()
     {
+        // Completely destroy the current session
         Session::destroy();
-        session_start();
+        
+        // Start a fresh new session
+        Session::start();
+        
         Session::flash('success', 'You have been logged out.');
         $this->redirect('login');
     }

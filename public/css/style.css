@@ -150,18 +150,29 @@ a {
 }
 
 /* Gender selection */
-.gender-option {
+.gender-option,
+.gender-card {
     cursor: pointer;
     transition: all 0.3s ease;
+    border: 2px solid transparent;
 }
 
-.gender-option:hover {
+.gender-option:hover,
+.gender-card:hover {
     transform: translateY(-3px);
+    border-color: rgba(102, 126, 234, 0.5);
 }
 
-.gender-option.selected {
-    border-color: var(--primary-color) !important;
-    background-color: rgba(102, 126, 234, 0.1);
+.gender-option.selected,
+.gender-card.selected {
+    border: 2px solid #0d6efd !important;
+    background-color: rgba(13, 110, 253, 0.05);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+.gender-card label {
+    cursor: pointer;
+    margin: 0;
 }
 
 /* Spoiler blur effect */
