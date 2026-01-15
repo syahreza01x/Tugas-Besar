@@ -163,3 +163,42 @@ a {
     border-color: var(--primary-color) !important;
     background-color: rgba(102, 126, 234, 0.1);
 }
+
+/* Spoiler blur effect */
+.spoiler-blur {
+    filter: blur(5px);
+    background-color: #6c757d;
+    color: transparent;
+    cursor: pointer;
+    user-select: none;
+    transition: filter 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    padding: 10px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.spoiler-blur::before {
+    content: '🔒 Klik untuk melihat spoiler';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: 500;
+    filter: none;
+    z-index: 10;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    white-space: nowrap;
+}
+
+.spoiler-blur.revealed {
+    filter: none;
+    background-color: transparent;
+    color: inherit;
+    cursor: default;
+    user-select: auto;
+}
+
+.spoiler-blur.revealed::before {
+    display: none;
+}

@@ -14,10 +14,18 @@ class ReviewController extends Controller
         $this->authCheck();
 
         $userId = Session::get('user_id');
-        $reviews = $this->reviewModel->getByUser($userId);
+        $filter = isset($_GET['filter']) ? $_GET['filter'] : 'mine';
+        
+        if ($filter === 'all') {
+            $reviews = $this->reviewModel->getAllReviews();
+        } else {
+            $reviews = $this->reviewModel->getByUser($userId);
+        }
 
         $this->view('review.index', [
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            'filter' => $filter,
+            'currentUserId' => $userId
         ]);
     }
 

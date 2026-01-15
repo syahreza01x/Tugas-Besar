@@ -15,6 +15,16 @@ class Review extends Model
         return $this->fetchAll($sql, ['user_id' => $userId]);
     }
 
+    public function getAllReviews()
+    {
+        $sql = "SELECT r.*, u.name as user_name, u.image as user_image 
+                FROM {$this->table} r 
+                JOIN users u ON r.id_user = u.id 
+                ORDER BY r.created_at DESC";
+
+        return $this->fetchAll($sql);
+    }
+
     public function getByAnime($animeId)
     {
         $sql = "SELECT r.*, u.name as user_name, u.image as user_image 
